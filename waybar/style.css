@@ -1,0 +1,118 @@
+/*
+ * A waybar config created by Louis Wong with lov <3
+ */
+
+@import '/home/wqlouis/.config/matugen-colors/colors.css';
+
+* {
+  font-family: "JetBrains Mono Nerd";
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+window#waybar {
+  background-color: rgba(26,11,16,0);
+  transition-duration: .5s;
+}
+
+.modules-left {
+  margin-left: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  padding-left: 4px;
+  padding-right: 0px;
+  background-color: @background;
+  box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, .5);
+}
+.modules-right {
+  margin-right: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background-color: @background;
+  box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, .5);
+}
+.modules-center {
+  border-radius: 0px 0px 12px 12px;
+  margin-bottom: 4px;
+  margin-top: 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: @background;
+  box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, .5);
+}
+
+.modules-right * {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+#custom-appmenu {
+  margin-right: 12px;
+  margin-left: 12px;
+  padding: 0;
+  font-size: 18px;
+  color: @primary_fixed;
+  transition-duration: .3s;
+}
+#custom-appmenu:hover {
+  color: #1793D1;
+  font-size: 18px;
+  transition-duration: .3s;
+}
+
+#workspaces {
+  margin-left: 16px;
+  margin-right: 0px;
+}
+
+#workspaces button {
+  background-color: @primary_container;
+  color: #EEE;
+  margin: 4px 4px 4px 4px;
+  padding: 0px 8px;
+  border-radius: 10px;
+  transition: all 0.1s ease-in-out;
+}
+#workspaces button:hover {
+  background-color: @primary_fixed;
+  color: @inverse_primary;
+}
+#workspaces button.active {
+  background-color: @primary_fixed;
+  color: @inverse_primary;
+  min-width: 50px;
+  transition: all 0.1s ease-in-out;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+}
+button:hover {
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: inherit;
+}
+
+#pulseaudio-slider {
+  background-color: #eee;
+  margin: 8px 0px;
+  padding: 0px 8px;
+}
+
+#pulseaudio-slider slider {
+  background-color: @primary_container;
+  border-radius: 100px;
+}
+
+#pulseaudio-slider trough {
+  background-color: @primary_fixed;
+  border-radius: 3px;
+}
+
+#pulseaudio-slider highlight {
+  background-color: @primary_container;
+  border-radius: 3px;
+}
