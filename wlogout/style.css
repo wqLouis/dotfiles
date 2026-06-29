@@ -1,0 +1,70 @@
+/* ───────────────────────────────────────────────────────────────────
+ * wlogout — Catppuccin Mocha (Blue accent)
+ * Source: https://github.com/catppuccin/wlogout
+ * Accent chosen to match the existing sway highlight (#89b4fa).
+ * ─────────────────────────────────────────────────────────────────── */
+
+* {
+ background-image: none;
+ box-shadow: none;
+}
+
+window {
+ /* Catppuccin Mocha — base with90% opacity */
+ background-color: rgba(30,30,46,0.90);
+}
+
+button {
+ border-radius:0;
+ /* Blue accent — #89b4fa */
+ border-color: #89b4fa;
+ text-decoration-color: #cdd6f4;
+ /* Catppuccin Mocha — mantle */
+ color: #cdd6f4;
+ /* Catppuccin Mocha — crust */
+ background-color: #181825;
+ border-style: solid;
+ border-width:1px;
+ background-repeat: no-repeat;
+ background-position: center;
+ background-size:35%;
+
+ /* ── Square shape + breathing room ──
+ * Note: this GTK build rejects width/height/min-width/
+ * max-width/aspect-ratio on buttons, so we can't enforce a
+ * hard square via CSS. margin gives spacing; the buttons take
+ * their natural row-filling aspect. To make them more square,
+ * pass e.g. -L 25% -R 25% -T 15% -B 15% on the wlogout CLI. */
+ margin:20px;
+}
+
+button:focus, button:active, button:hover {
+ /*20% Overlay2,80% mantle */
+ background-color: rgb(48,50,66);
+ outline-style: none;
+}
+
+/* ─── Icons (absolute paths — GTK CSS does not expand ~) ─────────── */
+#lock {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/lock.svg");
+}
+
+#logout {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/logout.svg");
+}
+
+#suspend {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/suspend.svg");
+}
+
+#hibernate {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/hibernate.svg");
+}
+
+#shutdown {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/shutdown.svg");
+}
+
+#reboot {
+ background-image: url("file:///home/wqlouis/.config/wlogout/icons/reboot.svg");
+}

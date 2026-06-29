@@ -1,0 +1,217 @@
+#######################################################################
+#                             Sway Config                             #
+#######################################################################
+
+# ─── Modifier ─────────────────────────────────────────────────────────
+# Mod4 = Super / Windows key
+# Alt — mirrors the Hyprland config ($mainMod = ALT)
+set $mod Mod1
+
+# ─── Terminal / Launcher ──────────────────────────────────────────────
+set $term     ghostty
+set $menu     fuzzel
+set $browser  firefox
+set $files    yazi
+
+# ─── Appearance ───────────────────────────────────────────────────────
+font JetBrainsMono Nerd Font 11
+default_border pixel 2
+gaps inner 4
+gaps outer 4
+
+# Catppuccin Mocha colours — uniform blue (#89b4fa) for every highlight state
+# class                 border  bg      text    indicator child_border
+client.focused          #89b4fa #89b4fa #1e1e2e #89b4fa   #89b4fa
+client.unfocused        #45475a #313244 #cdd6f4 #45475a   #45475a
+client.focused_inactive #89b4fa #313244 #cdd6f4 #89b4fa   #89b4fa
+
+# ─── Output ───────────────────────────────────────────────────────────
+# `swaymsg -t get_outputs` to see names; uncomment/adjust as needed.
+# output * resoauto
+# output HDMI-A-1 pos 1920 0 res 1920x1080
+# output eDP-1    pos 0 0    res 1920x1080 scale 1.25
+output * scale 1.1
+
+# ─── Input ────────────────────────────────────────────────────────────
+input type:keyboard {
+    xkb_layout us
+    # xkb_variant intl
+    # xkb_options caps:escape
+}
+
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    middle_emulation enabled
+}
+
+input type:pointer {
+    accel_profile flat
+}
+
+# ─── Keybindings ──────────────────────────────────────────────────────
+
+# Basics — mirrors your Hyprland config ($mainMod = ALT)
+bindsym $mod+q            exec $term
+bindsym $mod+Shift+q      kill
+bindsym $mod+e            exec $files
+bindsym $mod+b            exec $browser
+bindsym $mod+v            floating toggle
+bindsym $mod+f            fullscreen
+bindsym $mod+space        exec $menu
+bindsym $mod+Shift+c      reload
+bindsym $mod+Shift+e      exec 'pkill -x wlogout; sleep 0.2; wlogout -b 3'
+
+# Focus (mirrors Hyprland arrow keys)
+bindsym $mod+Left   focus left
+bindsym $mod+Right  focus right
+bindsym $mod+Up     focus up
+bindsym $mod+Down   focus down
+
+# Resize window (Super+WASD — Hyprland-style)
+bindsym Mod4+w resize shrink height 32px
+bindsym Mod4+a resize shrink width  32px
+bindsym Mod4+s resize grow   height 32px
+bindsym Mod4+d resize grow   width  32px
+
+# Switch workspaces by number
+bindsym $mod+1  workspace number 1
+bindsym $mod+2  workspace number 2
+bindsym $mod+3  workspace number 3
+bindsym $mod+4  workspace number 4
+bindsym $mod+5  workspace number 5
+bindsym $mod+6  workspace number 6
+bindsym $mod+7  workspace number 7
+bindsym $mod+8  workspace number 8
+bindsym $mod+9  workspace number 9
+bindsym $mod+0  workspace number 10
+
+# Move active window to workspace AND follow it
+bindsym $mod+Shift+1  move container to workspace number 1; workspace number 1
+bindsym $mod+Shift+2  move container to workspace number 2; workspace number 2
+bindsym $mod+Shift+3  move container to workspace number 3; workspace number 3
+bindsym $mod+Shift+4  move container to workspace number 4; workspace number 4
+bindsym $mod+Shift+5  move container to workspace number 5; workspace number 5
+bindsym $mod+Shift+6  move container to workspace number 6; workspace number 6
+bindsym $mod+Shift+7  move container to workspace number 7; workspace number 7
+bindsym $mod+Shift+8  move container to workspace number 8; workspace number 8
+bindsym $mod+Shift+9  move container to workspace number 9; workspace number 9
+bindsym $mod+Shift+0  move container to workspace number 10; workspace number 10
+
+# Workspace prev / next (mirrors Hyprland e+1 / e-1)
+bindsym $mod+a              workspace prev
+bindsym $mod+d              workspace next
+bindsym $mod+Shift+a        move container to workspace prev; workspace prev
+bindsym $mod+Shift+d        move container to workspace next; workspace next
+
+# Touchpad gestures — 3-finger swipe to change workspace (any number of fingers,3-5)
+bindgesture swipe:left   workspace prev
+bindgesture swipe:right  workspace next
+
+# Bonus: vim-style focus — uncomment to enable
+# bindsym $mod+h focus left
+# bindsym $mod+j focus down
+# bindsym $mod+k focus up
+# bindsym $mod+l focus right
+
+# Bonus: layout controls (b/v/s/e/t are taken above)
+# bindsym $mod+t        layout tabbed  # disabled — tabbed layout
+bindsym $mod+Shift+v  splitv
+bindsym $mod+w        splith          # hardcoded horizontal split (dwindle-style)
+bindsym $mod+Shift+t  layout stacking
+
+# Mouse drag (drag floating windows with Alt+LMB/RMB)
+floating_modifier Mod1 normal
+
+# Volume / brightness (mirrors Hyprland XF86 binds)
+bindsym XF86AudioRaiseVolume   exec wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume   exec wpctl set-volume      @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute          exec wpctl set-mute        @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute       exec wpctl set-mute        @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86MonBrightnessUp    exec brightnessctl -e4 -n2 set 5%+
+bindsym XF86MonBrightnessDown  exec brightnessctl -e4 -n2 set 5%-
+
+# Media keys (playerctl)
+bindsym XF86AudioNext   exec playerctl next
+bindsym XF86AudioPause  exec playerctl play-pause
+bindsym XF86AudioPlay   exec playerctl play-pause
+bindsym XF86AudioPrev   exec playerctl previous
+
+# Screenshot — SUPER+SHIFT+S (mirrors Hyprland default)
+bindsym Mod4+Shift+s  exec grim -g "$(slurp -d)" - | wl-copy
+
+# ─── Window rules ─────────────────────────────────────────────────────
+# Float common dialogs/pickers
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [app_id="file_progress"] floating enable, sticky enable
+
+# ─── Autostart (exec-once) ────────────────────────────────────────────
+# Each line is harmless if its binary is missing — sway won't crash,
+# the missing command just logs a warning.
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# Input method
+exec fcitx5 -d --disable notificationitem
+exec dbus-update-activation-environment --systemd \
+    INPUT_METHOD GTK_IM_MODULE QT_IM_MODULE XMODIFIERS SDL_IM_MODULE
+
+exec mako
+# Background. Set SWAYBG_IMAGE env var to override; falls back to wallpaper.jpg.
+exec swaybg -i "${SWAYBG_IMAGE:-$HOME/Pictures/wallpaper/wallpaper.jpg}" -m fill
+exec swayidle -w \
+        timeout 300  'swaylock -f -c 1e1e2e' \
+        timeout 600  'swaymsg "output * power off"' \
+        resume       'swaymsg "output * power on"' \
+        before-sleep 'swaylock -f -c 1e1e2e'
+
+# Uncomment after installing xdg-desktop-portal + xdg-desktop-portal-gtk:
+# exec /usr/lib/xdg-desktop-portal -r
+
+# ─── Status bar ───────────────────────────────────────────────────────
+bar {
+    position           top
+    height             32
+    separator_symbol   "  "
+    status_command     i3status-rs
+
+    # ─── Workspace buttons ────────────────────────────────────────
+    # Always show every workspace's number
+    workspace_buttons       yes
+    strip_workspace_numbers no
+    # Each button becomes a real square (matches bar height)
+    workspace_min_width     32
+    # Allow Pango markup so i3status-rs can render padding/icons nicely
+    pango_markup            enabled
+
+    # Catppuccin Mocha
+    # Colors are: border, background, text. Text MUST contrast the bg
+    # or the workspace number is invisible (was the bug here).
+    font               "JetBrainsMono Nerd Font 11"
+    colors {
+        background         #1e1e2e
+        statusline         #cdd6f4
+        separator          #45475a
+        focused_workspace  #89b4fa #89b4fa #1e1e2e
+        active_workspace   #313244 #313244 #cdd6f4
+        inactive_workspace #1e1e2e #1e1e2e #6c7086
+        urgent_workspace   #f38ba8 #f38ba8 #1e1e2e
+        binding_mode       #89b4fa #313244 #89b4fa
+    }
+
+    # Scroll on the bar to cycle workspaces
+    bindsym button4 workspace prev
+    bindsym button5 workspace next
+    # Disable middle-click default (paste) so the bar behaves predictably
+    bindsym button2 nop
+}
+
+# (Mouse wheel on bar → prev/next workspace — see `bar { bindsym ... }` below)
+# Clicking workspace buttons already switches to them by default; no extra bindsym needed.
+
+#######################################################################
+#                              Include                               #
+#######################################################################
+# Drop extra snippets into ~/.config/sway/config.d/*.conf
+include ~/.config/sway/config.d/*

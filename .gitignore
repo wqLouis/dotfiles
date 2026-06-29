@@ -1,1 +1,10 @@
-matugen-themes
+# Generated themes
+matugen-themes/
+
+# Cava user themes (shipped ones are committed; ignore new ones dropped via symlink)
+# btop/themes and cava/themes are intentionally tracked
+
+# Local-only overlays referenced in configs (absolute paths in wlogout style.css,
+# swaybg wallpaper, etc. — uncomment to ignore if symlinked)
+# wlogout/icons/
+# Pictures/wallpaper/

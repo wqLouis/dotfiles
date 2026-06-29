@@ -1,0 +1,31 @@
+# mako notification daemon — Catppuccin Mocha
+# https://github.com/emersion/mako
+
+# ─── Geometry ─────────────────────────────────────────────────────────
+default-timeout=5000
+border-size=2
+border-radius=8
+text-alignment=center
+max-history=20
+
+# ─── Catppuccin Mocha palette ─────────────────────────────────────────
+# Base surface tones
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#89b4fa
+
+# Interactive states
+progress-color=over #f9e2af
+
+[urgency=low]
+border-color=#a6e3a1
+text-color=#bac2de
+
+[urgency=normal]
+border-color=#89b4fa
+text-color=#cdd6f4
+
+[urgency=high]
+border-color=#f38ba8
+text-color=#f38ba8
+default-timeout=0
