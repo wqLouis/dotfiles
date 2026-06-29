@@ -18,6 +18,9 @@ Themed with **Catppuccin Mocha** throughout.
 | `fuzzel`         | Application launcher                 | `fuzzel/fuzzel.ini`     |
 | `i3status-rust`  | Status bar (Sway bar backend)        | `i3status-rust/config.toml` |
 
+`mako` shows desktop notification popups (downloads finished, chat messages,
+build results, low-battery warnings, etc.) — autostarted by `sway/config`.
+
 ### Shell & terminal
 
 | Software    | Purpose            | Config             |
@@ -28,18 +31,13 @@ Themed with **Catppuccin Mocha** throughout.
 
 ### Editors
 
-| Software  | Purpose               | Config                |
-|-----------|-----------------------|-----------------------|
-| `helix`   | Modal text editor     | `helix/`              |
-| `zed`     | GUI code editor       | `zed/`                |
-| `spicetify` | Spotify theme patch | `spicetify/config-xpui.ini` |
+Editor configs are intentionally not tracked — install `helix` / `zed` /
+`spicetify` / `cava` on a per-machine basis as needed.
 
 ### System tools
 
 | Software | Purpose                       | Config           |
 |----------|-------------------------------|------------------|
-| `btop`   | System monitor                | `btop/btop.conf` |
-| `cava`   | Audio visualizer              | `cava/`          |
 | `fcitx5` | Input method framework        | (autostart in sway) |
 | `playerctl` | Media key control          | (keybinds)       |
 | `wpctl`  | PipeWire volume control       | (keybinds)       |
@@ -48,6 +46,9 @@ Themed with **Catppuccin Mocha** throughout.
 | `wl-copy` | Wayland clipboard             | (screenshot)     |
 | `swaymsg`, `pkill` | Session control      | (keybinds)       |
 
+`btop` (system monitor), `cava` (audio visualizer) configs are intentionally
+not tracked.
+
 ## Layout
 
 ```
@@ -55,19 +56,14 @@ Themed with **Catppuccin Mocha** throughout.
 ├── .gitignore
 ├── README.md
 ├── starship.toml
-├── btop/
-├── cava/
 ├── fish/
 ├── fuzzel/
 ├── ghostty/
-├── helix/
 ├── i3status-rust/
 ├── mako/
-├── spicetify/
 ├── sway/
 ├── swaylock/
-├── wlogout/
-└── zed/
+└── wlogout/
 ```
 
 ## Install
@@ -78,7 +74,7 @@ matching directory in this repo to `~/.config/`:
 ```sh
 git clone https://github.com/wqLouis/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-for d in btop cava fish fuzzel ghostty helix i3status-rust mako spicetify sway swaylock wlogout zed; do
+for d in fish fuzzel ghostty i3status-rust mako sway swaylock wlogout; do
     ln -sf "$PWD/$d" "$HOME/.config/$d"
 done
 ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
@@ -91,16 +87,9 @@ Drop extra Sway snippets into `~/.config/sway/config.d/*.conf` (sway's
 
 ```sh
 pacman -S sway swaybg swayidle swaylock mako fuzzel i3status-rust \
-            fish ghostty starship btop cava grim slurp wl-clipboard \
+            fish ghostty starship grim slurp wl-clipboard \
             playerctl wireplumber brightnessctl fcitx5 fcitx5-gtk \
-            fcitx5-qt waybar-protocol-clipboard
-```
-
-Editors:
-
-```sh
-pacman -S helix zed
-yay -S spicetify-cli
+            fcitx5-qt
 ```
 
 ## Notes
