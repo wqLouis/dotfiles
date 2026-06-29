@@ -83,6 +83,15 @@ ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
 Drop extra Sway snippets into `~/.config/sway/config.d/*.conf` (sway's
 `include` line picks them up automatically).
 
+### One-line install
+
+Install every required package, clone this repo, and symlink every config into
+`~/.config/` in a single command:
+
+```sh
+sudo pacman -S --needed - < <(echo "sway swaybg swayidle swaylock mako fuzzel i3status-rust fish ghostty starship grim slurp wl-clipboard playerctl wireplumber brightnessctl fcitx5 fcitx5-gtk fcitx5-qt") && git clone https://github.com/wqLouis/dotfiles.git ~/dotfiles && cd ~/dotfiles && mkdir -p ~/.config && for d in fish fuzzel ghostty i3status-rust mako sway swaylock wlogout; do ln -sf "$PWD/$d" "$HOME/.config/$d"; done && ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
+```
+
 ## Required packages (Arch)
 
 ```sh
