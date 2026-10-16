@@ -11,7 +11,7 @@ set $mod Mod1
 set $term     ghostty
 set $menu     fuzzel
 set $browser  firefox
-set $files    yazi
+set $files    nautilus
 
 # ─── Appearance ───────────────────────────────────────────────────────
 font JetBrainsMono Nerd Font 11
@@ -30,7 +30,7 @@ client.focused_inactive #89b4fa #313244 #cdd6f4 #89b4fa   #89b4fa
 # output * resoauto
 # output HDMI-A-1 pos 1920 0 res 1920x1080
 # output eDP-1    pos 0 0    res 1920x1080 scale 1.25
-output * scale 1.1
+output * scale 1
 
 # ─── Input ────────────────────────────────────────────────────────────
 input type:keyboard {
@@ -158,57 +158,64 @@ exec dbus-update-activation-environment --systemd \
     INPUT_METHOD GTK_IM_MODULE QT_IM_MODULE XMODIFIERS SDL_IM_MODULE
 
 exec mako
+# Status bar — Waybar (replaces the swaybar `bar { }` block; see that section)
+exec waybar
 # Background. Set SWAYBG_IMAGE env var to override; falls back to wallpaper.jpg.
 exec swaybg -i "${SWAYBG_IMAGE:-$HOME/Pictures/wallpaper/wallpaper.jpg}" -m fill
-exec swayidle -w \
-        timeout 300  'swaylock -f -c 1e1e2e' \
-        timeout 600  'swaymsg "output * power off"' \
-        resume       'swaymsg "output * power on"' \
-        before-sleep 'swaylock -f -c 1e1e2e'
+# exec swayidle -w \
+#        timeout 3000  'swaylock -f -c 1e1e2e' \
+#        timeout 6000  'swaymsg "output * power off"' \
+#        resume       'swaymsg "output * power on"' \
+#        before-sleep 'swaylock -f -c 1e1e2e'
 
 # Uncomment after installing xdg-desktop-portal + xdg-desktop-portal-gtk:
 # exec /usr/lib/xdg-desktop-portal -r
 
 # ─── Status bar ───────────────────────────────────────────────────────
-bar {
-    position           top
-    height             32
-    separator_symbol   "  "
-    status_command     i3status-rs
+# Swapped the swaybar for Waybar. The original `bar { }` block is kept
+# below (commented out) for reference and easy rollback.
+#   Waybar config:     ~/.config/waybar/config.jsonc
+#   Waybar stylesheet: ~/.config/waybar/style.css
+#   Launched by:       `exec waybar` (see Autostart section above)
+#
+# bar {
+#     position           top
+#     height             32
+#     separator_symbol   "  "
+#     status_command     i3status-rs
+#
+#     # ─── Workspace buttons ────────────────────────────────────────
+#     # Always show every workspace's number
+#     workspace_buttons       yes
+#     strip_workspace_numbers no
+#     # Each button becomes a real square (matches bar height)
+#     workspace_min_width     32
+#     # Allow Pango markup so i3status-rs can render padding/icons nicely
+#     pango_markup            enabled
+#
+#     # Catppuccin Mocha
+#     # Colors are: border, background, text. Text MUST contrast the bg
+#     # or the workspace number is invisible (was the bug here).
+#     font               "JetBrainsMono Nerd Font 11"
+#     colors {
+#         background         #1e1e2e
+#         statusline         #cdd6f4
+#         separator          #45475a
+#         focused_workspace  #89b4fa #89b4fa #1e1e2e
+#         active_workspace   #313244 #313244 #cdd6f4
+#         inactive_workspace #1e1e2e #1e1e2e #6c7086
+#         urgent_workspace   #f38ba8 #f38ba8 #1e1e2e
+#         binding_mode       #89b4fa #313244 #89b4fa
+#     }
+#
+#     # Scroll on the bar to cycle workspaces
+#     bindsym button4 workspace prev
+#     bindsym button5 workspace next
+#     # Disable middle-click default (paste) so the bar behaves predictably
+#     bindsym button2 nop
+# }
 
-    # ─── Workspace buttons ────────────────────────────────────────
-    # Always show every workspace's number
-    workspace_buttons       yes
-    strip_workspace_numbers no
-    # Each button becomes a real square (matches bar height)
-    workspace_min_width     32
-    # Allow Pango markup so i3status-rs can render padding/icons nicely
-    pango_markup            enabled
-
-    # Catppuccin Mocha
-    # Colors are: border, background, text. Text MUST contrast the bg
-    # or the workspace number is invisible (was the bug here).
-    font               "JetBrainsMono Nerd Font 11"
-    colors {
-        background         #1e1e2e
-        statusline         #cdd6f4
-        separator          #45475a
-        focused_workspace  #89b4fa #89b4fa #1e1e2e
-        active_workspace   #313244 #313244 #cdd6f4
-        inactive_workspace #1e1e2e #1e1e2e #6c7086
-        urgent_workspace   #f38ba8 #f38ba8 #1e1e2e
-        binding_mode       #89b4fa #313244 #89b4fa
-    }
-
-    # Scroll on the bar to cycle workspaces
-    bindsym button4 workspace prev
-    bindsym button5 workspace next
-    # Disable middle-click default (paste) so the bar behaves predictably
-    bindsym button2 nop
-}
-
-# (Mouse wheel on bar → prev/next workspace — see `bar { bindsym ... }` below)
-# Clicking workspace buttons already switches to them by default; no extra bindsym needed.
+# (Waybar handles wheel-on-bar prev/next and workspace clicks natively.)
 
 #######################################################################
 #                              Include                               #

@@ -1,0 +1,107 @@
+// ─────────────────────────────────────────────────────────────────────────
+// MangoWM bar — companion to config.jsonc (which stays sway-only).
+//
+// Launched by mango as:  waybar -c ~/.config/waybar/config.mango.jsonc
+// (see exec_once in ~/.config/mango/config.toml). The sway config is not
+// touched, so plain `waybar` under sway keeps working exactly as before.
+//
+// Why a separate file:
+//   • The installed waybar (0.15.0) has no native `mango/*` modules.
+//   • MangoWM does not implement the dwl (zdwl) IPC protocol, so waybar's
+//     dwl/tags + dwl/window modules cannot be used.
+//   • MangoWM *does* implement ext-workspace-v1, so the tags come from
+//     `ext/workspaces` (clickable), and the focused window title is streamed
+//     from mango's own IPC via the custom/window helper script.
+//
+// Colours come from the shared ~/.config/waybar/style.css.
+// ─────────────────────────────────────────────────────────────────────────
+
+{
+  // ─── Bar geometry / fonts (same as config.jsonc) ──────────────────────
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "font-family": "JetBrainsMono Nerd Font",
+  "font-size": 11,
+
+  "modules-left":   ["ext/workspaces"],
+  "modules-center": ["custom/window"],
+  "modules-right":  ["custom/desktop", "cpu", "memory", "battery", "network", "pulseaudio", "clock"],
+
+  // ─── Tags ─────────────────────────────────────────────────────────────
+  // MangoWM publishes each tag as an ext-workspace-v1 workspace. Keep all of
+  // them on screen (like sway's persistent-workspaces); empty ones get the
+  // `.hidden` class, styled dimmer in style.css.
+  "ext/workspaces": {
+    "format": "{name}",
+    "ignore-hidden": false,
+    "on-click": "activate",
+    "on-click-right": "deactivate"
+  },
+
+  // ─── Focused window title (streamed from `mmsg watch focusing-client`) ─
+  "custom/window": {
+    "exec": "$HOME/.config/waybar/mango-window.sh",
+    "return-type": "json",
+    "format": "{}",
+    "max-length": 60,
+    "tooltip": false
+  },
+
+  // ─── Everything below mirrors config.jsonc / sway ─────────────────────
+
+  // Current desktop name (i3status-rust custom block)
+  "custom/desktop": {
+    "exec": "echo ${XDG_CURRENT_DESKTOP:-mango} | tr '[:lower:]' '[:upper:]'",
+    "interval": 600,
+    "format": "\uf108 {text}"
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "\uf2db CPU {usage}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": "MEM {percentage}%"
+  },
+
+  "battery": {
+    "bat": "BAT0",
+    "interval": 10,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format-time":     "{H:02}:{m}",
+    "format":          "\uf240 {capacity}% {time}",
+    "format-charging": "\uf0e7 {capacity}% {time}",
+    "format-plugged":  "\uf1e6 {capacity}%",
+    "format-full":     "\uf240 {capacity}%"
+  },
+
+  "network": {
+    "interval": 2,
+    "format-wifi":         "\uf1eb {signalStrength}% {essid}",
+    "format-ethernet":     "\uf0c1 {ifname}",
+    "format-disconnected": "\uf00d Down"
+  },
+
+  "pulseaudio": {
+    "format":       "\uf028 {volume}%",
+    "format-muted": "\uf026",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+
+  "clock": {
+    "interval": 30,
+    "format": "\uf017 {:%a %d %b  %R}",
+    "tooltip-format": "\uf133 {:%A %d %B %Y  %R}"
+  }
+}

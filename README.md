@@ -11,12 +11,10 @@ Themed with **Catppuccin Mocha** throughout.
 |------------------|--------------------------------------|-------------------------|
 | `sway`           | Tiling Wayland compositor            | `sway/config`           |
 | `swaybg`         | Wallpaper daemon                     | (env: `SWAYBG_IMAGE`)   |
-| `swayidle`       | Idle/screen-lock manager             | (in `sway/config`)      |
-| `swaylock`       | Screen locker                        | `swaylock/config`       |
 | `wlogout`        | Logout/power menu                    | `wlogout/{layout,style.css,icons/}` |
 | `mako`           | Notification daemon                  | `mako/config`           |
 | `fuzzel`         | Application launcher                 | `fuzzel/fuzzel.ini`     |
-| `i3status-rust`  | Status bar (Sway bar backend)        | `i3status-rust/config.toml` |
+| `waybar`         | Status bar (replaces i3status-rust + swaybar) | `waybar/{config.jsonc,style.css}` |
 
 `mako` shows desktop notification popups (downloads finished, chat messages,
 build results, low-battery warnings, etc.) — autostarted by `sway/config`.
@@ -59,10 +57,10 @@ not tracked.
 ├── fish/
 ├── fuzzel/
 ├── ghostty/
-├── i3status-rust/
+├── hypr/
 ├── mako/
 ├── sway/
-├── swaylock/
+├── waybar/
 └── wlogout/
 ```
 
@@ -74,7 +72,7 @@ matching directory in this repo to `~/.config/`:
 ```sh
 git clone https://github.com/wqLouis/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-for d in fish fuzzel ghostty i3status-rust mako sway swaylock wlogout; do
+for d in fish fuzzel ghostty hypr mako sway waybar wlogout; do
     ln -sf "$PWD/$d" "$HOME/.config/$d"
 done
 ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
@@ -89,13 +87,13 @@ Install every required package, clone this repo, and symlink every config into
 `~/.config/` in a single command:
 
 ```sh
-sudo pacman -S --needed - < <(echo "sway swaybg swayidle swaylock mako fuzzel i3status-rust fish ghostty starship grim slurp wl-clipboard playerctl wireplumber brightnessctl fcitx5 fcitx5-gtk fcitx5-qt") && git clone https://github.com/wqLouis/dotfiles.git ~/dotfiles && cd ~/dotfiles && mkdir -p ~/.config && for d in fish fuzzel ghostty i3status-rust mako sway swaylock wlogout; do ln -sf "$PWD/$d" "$HOME/.config/$d"; done && ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
+sudo pacman -S --needed - < <(echo "sway swaybg waybar wlogout mako fuzzel fish ghostty starship grim slurp wl-clipboard playerctl wireplumber brightnessctl fcitx5 fcitx5-gtk fcitx5-qt") && git clone https://github.com/wqLouis/dotfiles.git ~/dotfiles && cd ~/dotfiles && mkdir -p ~/.config && for d in fish fuzzel ghostty hypr mako sway waybar wlogout; do ln -sf "$PWD/$d" "$HOME/.config/$d"; done && ln -sf "$PWD/starship.toml" "$HOME/.config/starship.toml"
 ```
 
 ## Required packages (Arch)
 
 ```sh
-pacman -S sway swaybg swayidle swaylock mako fuzzel i3status-rust \
+pacman -S sway swaybg waybar wlogout mako fuzzel \
             fish ghostty starship grim slurp wl-clipboard \
             playerctl wireplumber brightnessctl fcitx5 fcitx5-gtk \
             fcitx5-qt
@@ -103,6 +101,7 @@ pacman -S sway swaybg swayidle swaylock mako fuzzel i3status-rust \
 
 ## Notes
 
-- Theme: **Catppuccin Mocha** is used by sway, fuzzel, mako, swaylock, i3status-rust, ghostty, fish, starship, and wlogout.
+- Theme: **Catppuccin Mocha** is used by sway, fuzzel, mako, waybar, ghostty, fish, starship, and wlogout.
+- Hyprland: `hypr/hyprland.lua` is a Hyprland 0.55+ Lua config mirroring the Sway setup; it requires the `hyprland` package and loads `waybar/config.hyprland.jsonc`.
 - Wallpaper: set `SWAYBG_IMAGE=/path/to/wallpaper.jpg` before launching sway, or drop `wallpaper.jpg` at `~/Pictures/wallpaper/wallpaper.jpg`.
 - wlogout `style.css` uses absolute paths under `/home/wqlouis/.config/wlogout/icons/`; edit if your username differs.

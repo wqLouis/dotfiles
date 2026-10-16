@@ -1,0 +1,138 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Waybar theme — Catppuccin Mocha, mirroring the swaybar colours:
+     background         #1e1e2e
+     statusline         #cdd6f4
+     separator          #45475a
+     focused_workspace  #89b4fa #89b4fa #1e1e2e
+     active_workspace   #313244 #313244 #cdd6f4
+     inactive_workspace #1e1e2e #1e1e2e #6c7086
+     urgent_workspace   #f38ba8 #f38ba8 #1e1e2e
+     binding_mode       #89b4fa #313244 #89b4fa
+   ───────────────────────────────────────────────────────────────────── */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 11px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: #1e1e2e;   /* background */
+  color: #cdd6f4;        /* statusline */
+}
+
+/* Right-hand status modules — pad horizontally to stand in for the
+   swaybar `separator_symbol "  "` (color #45475a is used as a border feel). */
+#custom-desktop,
+#cpu,
+#memory,
+#battery,
+#network,
+#pulseaudio,
+#clock {
+  padding: 0 8px;
+  color: #cdd6f4;
+}
+
+#custom-desktop { color: #89b4fa; }
+
+/* ─── Workspace buttons ──────────────────────────────────────────────────
+   All 10 are small flat dark squares (no number). The active one stretches
+   into a full-height bright vertical bar. No rounding, fast transition.   */
+
+#workspaces button {
+  min-width: 12px;
+  min-height: 12px;
+  padding: 0;
+  margin: 10px 4px;                 /* 12px square, vertically centred */
+  border: none;
+  border-radius: 0;
+  background: #313244;              /* dark block */
+  transition: all 0.1s linear;      /* fast */
+}
+
+#workspaces button.visible {
+  background: #45475a;              /* occupied but not focused */
+}
+
+/* No number inside the squares — collapse the label so it adds no height */
+#workspaces button label {
+  font-size: 0;
+  min-height: 0;
+}
+
+#workspaces button:hover {
+  background: #585b70;
+}
+
+/* Active: stretch into a bright vertical bar (with a little y margin) */
+#workspaces button.active,
+#workspaces button.focused {
+  min-height: 24px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background: #89b4fa;
+}
+
+/* Urgent */
+#workspaces button.urgent {
+  min-height: 24px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background: #f38ba8;
+}
+
+/* ─── Binding mode (sway/mode, hyprland/submap) ──────────────────────── */
+#mode,
+#submap {
+  padding: 0 8px;
+  background: #313244;
+  color: #89b4fa;               /* binding_mode */
+}
+
+/* ─── Window title (center) ──────────────────────────────────────────── */
+#window {
+  padding: 0 8px;
+  color: #cdd6f4;
+}
+
+/* ─── Module states (match i3status-rust thresholds) ─────────────────── */
+#cpu.warning   { color: #f9e2af; }
+#cpu.critical  { color: #f38ba8; }
+
+#memory.warning  { color: #f9e2af; }
+#memory.critical { color: #f38ba8; }
+
+/* Battery states (Waybar adds the matching class automatically):
+     discharging → normal text, charging → green, full/plugged → blue,
+     warning → yellow, critical → red.
+   The discharging rule is listed first so warning/critical win when the
+   battery is both draining AND low. */
+#battery.discharging  { color: #fab387; }
+#battery.charging     { color: #a6e3a1; }
+#battery.full,
+#battery.plugged      { color: #89b4fa; }
+#battery.warning      { color: #f9e2af; }
+#battery.critical     { color: #f38ba8; }
+
+#network.disconnected { color: #f38ba8; }
+#pulseaudio.muted     { color: #6c7086; }
+
+/* ─────────────────────────────────────────────────────────────────────
+   MangoWM-only additions.
+   These selectors are inert under sway (sway/workspaces never emits a
+   `.hidden` class and there is no custom/window module there), so the
+   sway bar is unaffected by them.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* ext/workspaces: empty tags carry `.hidden` — blend them into the bar so
+   only occupied/active tags stand out (occupied ones use the base rule). */
+#workspaces button.hidden {
+  background: #1e1e2e;
+}
+
+/* Focused window title under mango comes from custom/window, not sway/window. */
+#custom-window {
+  padding: 0 8px;
+  color: #cdd6f4;
+}

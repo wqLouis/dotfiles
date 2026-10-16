@@ -1,0 +1,102 @@
+{
+  // ─── Bar geometry / fonts (mirrors sway `bar { position top; height 32;
+  //     font "JetBrainsMono Nerd Font 11" }`) ────────────────────────────
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "font-family": "JetBrainsMono Nerd Font",
+  "font-size": 11,
+
+  // Workspaces + binding mode on the left, window title centered,
+  // everything else on the right (mirrors i3status-rust block order).
+  // Launched by Hyprland with: waybar -c ~/.config/waybar/config.hyprland.jsonc
+  "modules-left":   ["hyprland/workspaces", "hyprland/submap"],
+  "modules-center": ["hyprland/window"],
+  "modules-right":  ["custom/desktop", "cpu", "memory", "battery", "network", "pulseaudio", "clock"],
+
+  // ─── Workspaces ───────────────────────────────────────────────────────
+  // Mirrors the sway bar: always show 1–10, scroll to switch.
+  "hyprland/workspaces": {
+    "format": "",
+    "all-outputs": false,
+    "on-scroll-up": "hyprctl dispatch workspace e-1",
+    "on-scroll-down": "hyprctl dispatch workspace e+1",
+    "persistent-workspaces": {
+      "1": [],  "2": [],  "3": [],  "4": [],  "5": [],
+      "6": [],  "7": [],  "8": [],  "9": [],  "10": []
+    }
+  },
+
+  // ─── Binding mode / submap (swaybar colors: binding_mode) ─────────────
+  "hyprland/submap": {
+    "format": "\uf11c {}",
+    "max-length": 40
+  },
+
+  // ─── Focused window title (was i3status-rust focused_window) ──────────
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 60
+  },
+
+  // ─── Current desktop name (i3status-rust custom block) ────────────────
+  "custom/desktop": {
+    "exec": "echo ${XDG_CURRENT_DESKTOP:-Hyprland} | tr '[:lower:]' '[:upper:]'",
+    "interval": 600,
+    "format": "\uf108 {text}"
+  },
+
+  // ─── CPU (i3status-rust: warning 70, critical 90) ─────────────────────
+  "cpu": {
+    "interval": 5,
+    "format": "\uf2db CPU {usage}%",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+
+  // ─── Memory ───────────────────────────────────────────────────────────
+  "memory": {
+    "interval": 5,
+    "format": "MEM {percentage}%"
+  },
+
+  // ─── Battery (BAT0; keep % visible in every state) ────────────────────
+  "battery": {
+    "bat": "BAT0",
+    "interval": 10,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format-time":     "{H:02}:{m}",
+    "format":          "\uf240 {capacity}% {time}",
+    "format-charging": "\uf0e7 {capacity}% {time}",
+    "format-plugged":  "\uf1e6 {capacity}%",
+    "format-full":     "\uf240 {capacity}%"
+  },
+
+  // ─── Network ──────────────────────────────────────────────────────────
+  "network": {
+    "interval": 2,
+    "format-wifi":         "\uf1eb {signalStrength}% {essid}",
+    "format-ethernet":     "\uf0c1 {ifname}",
+    "format-disconnected": "\uf00d Down"
+  },
+
+  // ─── Sound ────────────────────────────────────────────────────────────
+  "pulseaudio": {
+    "format":       "\uf028 {volume}%",
+    "format-muted": "\uf026",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+
+  // ─── Time ─────────────────────────────────────────────────────────────
+  "clock": {
+    "interval": 30,
+    "format": "\uf017 {:%a %d %b  %R}",
+    "tooltip-format": "\uf133 {:%A %d %B %Y  %R}"
+  }
+}

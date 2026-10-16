@@ -4,7 +4,7 @@
 # ─── Geometry ─────────────────────────────────────────────────────────
 default-timeout=5000
 border-size=2
-border-radius=8
+border-radius=0
 text-alignment=center
 max-history=20
 
