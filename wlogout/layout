@@ -12,7 +12,7 @@
 }
 {
  "label" : "logout",
- "action" : "swaymsg exit",
+ "action" : "if printenv HYPRLAND_INSTANCE_SIGNATURE >/dev/null; then hyprctl dispatch 'hl.dsp.exit()'; elif printenv SWAYSOCK >/dev/null; then swaymsg exit; else loginctl terminate-session $XDG_SESSION_ID; fi",
  "text" : "Logout",
  "keybind" : "e"
 }
