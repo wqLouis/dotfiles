@@ -37,27 +37,30 @@ window#waybar {
 #custom-desktop { color: #89b4fa; }
 
 /* ─── Workspace buttons ──────────────────────────────────────────────────
-   All 10 are small flat dark squares (no number). The active one stretches
-   into a full-height bright vertical bar. No rounding, fast transition.   */
+   Uniform squares showing the workspace number; the focused one is
+   highlighted and enlarged. No rounding, fast transition.                */
 
 #workspaces button {
-  min-width: 12px;
-  min-height: 12px;
+  min-width: 20px;
+  min-height: 20px;
   padding: 0;
-  margin: 10px 4px;                 /* 12px square, vertically centred */
+  margin: 6px 3px;                  /* 20px square, centred in a 32px bar */
   border: none;
   border-radius: 0;
-  background: #313244;              /* dark block */
-  transition: all 0.1s linear;      /* fast */
+  background: #313244;              /* empty */
+  color: #6c7086;
+  font-size: 12px;
+  transition: all 0.1s ease-out;
 }
 
-#workspaces button.visible {
-  background: #45475a;              /* occupied but not focused */
+#workspaces button.visible {        /* occupied but not focused */
+  background: #45475a;
+  color: #cdd6f4;
 }
 
-/* No number inside the squares — collapse the label so it adds no height */
+/* Workspace number inside the square */
 #workspaces button label {
-  font-size: 0;
+  font-size: 12px;
   min-height: 0;
 }
 
@@ -65,21 +68,29 @@ window#waybar {
   background: #585b70;
 }
 
-/* Active: stretch into a bright vertical bar (with a little y margin) */
+/* Active/focused: highlighted and enlarged */
 #workspaces button.active,
 #workspaces button.focused {
-  min-height: 24px;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  margin: 2px 3px;
   background: #89b4fa;
+  color: #1e1e2e;
+}
+
+#workspaces button.active label,
+#workspaces button.focused label {
+  font-size: 15px;
+  font-weight: bold;
 }
 
 /* Urgent */
 #workspaces button.urgent {
-  min-height: 24px;
-  margin-top: 4px;
-  margin-bottom: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  margin: 2px 3px;
   background: #f38ba8;
+  color: #1e1e2e;
 }
 
 /* ─── Binding mode (sway/mode, hyprland/submap) ──────────────────────── */

@@ -17,7 +17,7 @@
   // swaybar: workspace_buttons yes; strip_workspace_numbers no;
   // workspace_min_width 32; scroll = prev/next.
   "sway/workspaces": {
-    "format": "",
+    "format": "{name}",
     "disable-scroll": false,
     "all-outputs": false,
     "persistent-workspaces": {
@@ -70,8 +70,8 @@
       "critical": 15
     },
     "format-time":     "{H:02}:{m}",
-    "format":          "\uf240 {capacity}% {time}",
-    "format-charging": "\uf0e7 {capacity}% {time}",
+    "format":          "\uf240 {capacity}% {power:.1f}W {time}",
+    "format-charging": "\uf0e7 {capacity}% {power:.1f}W {time}",
     "format-plugged":  "\uf1e6 {capacity}%",
     "format-full":     "\uf240 {capacity}%"
   },
